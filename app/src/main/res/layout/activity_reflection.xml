@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reflection: 14-day summary. Values are hard-coded for now. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Restudy.Screen"
+    android:fillViewport="true"
+    tools:context=".ReflectionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="40dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            style="@style/Restudy.Pill.Accent"
+            android:text="Reflection stage" />
+
+        <TextView
+            style="@style/Text.Display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Your 14-day check-in" />
+
+        <TextView
+            style="@style/Text.Body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Here's what your last two weeks are showing." />
+
+        <!-- TODO: compute averages from saved check-ins (hard-coded for now) -->
+
+        <!-- Stress -->
+        <LinearLayout
+            style="@style/Restudy.TintCard"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/stress_container">
+
+            <ImageView
+                style="@style/Restudy.IconTile"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_bolt"
+                app:tint="@color/stress_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtStressValue"
+                    style="@style/Text.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stress · 3.00" />
+
+                <TextView
+                    android:id="@+id/txtStressDelta"
+                    style="@style/Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Lower than 3.70 before"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/icStressTrend"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/positive_container"
+                android:contentDescription="Improved"
+                android:padding="7dp"
+                android:src="@drawable/ic_trend_down"
+                app:tint="@color/positive" />
+        </LinearLayout>
+
+        <!-- Mood -->
+        <LinearLayout
+            style="@style/Restudy.TintCard"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/mood_container">
+
+            <ImageView
+                style="@style/Restudy.IconTile"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_mood"
+                app:tint="@color/mood_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtMoodValue"
+                    style="@style/Text.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mood · 3.22" />
+
+                <TextView
+                    android:id="@+id/txtMoodDelta"
+                    style="@style/Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Higher than 2.50 before"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/icMoodTrend"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/positive_container"
+                android:contentDescription="Improved"
+                android:padding="7dp"
+                android:src="@drawable/ic_trend_up"
+                app:tint="@color/positive" />
+        </LinearLayout>
+
+        <!-- Burnout -->
+        <LinearLayout
+            style="@style/Restudy.TintCard"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/burnout_container">
+
+            <ImageView
+                style="@style/Restudy.IconTile"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_battery_low"
+                app:tint="@color/burnout_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtBurnoutValue"
+                    style="@style/Text.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Burnout · 3.22" />
+
+                <TextView
+                    android:id="@+id/txtBurnoutDelta"
+                    style="@style/Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Lower than 3.60 before"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/icBurnoutTrend"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/positive_container"
+                android:contentDescription="Improved"
+                android:padding="7dp"
+                android:src="@drawable/ic_trend_down"
+                app:tint="@color/positive" />
+        </LinearLayout>
+
+        <!-- Completion -->
+        <LinearLayout
+            style="@style/Restudy.Card"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_card_tint"
+            android:backgroundTint="@color/primary_container"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/Restudy.IconTile"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="9dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/on_primary_container" />
+
+                <TextView
+                    android:id="@+id/txtCompletion"
+                    style="@style/Text.Body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:text="12 of 14 intervention days completed"
+                    android:textColor="@color/on_primary_container" />
+
+                <TextView
+                    android:id="@+id/txtCompletionPct"
+                    style="@style/Text.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="86%"
+                    android:textColor="@color/on_primary_container" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressDays"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="14dp"
+                android:max="14"
+                android:progress="12"
+                android:progressDrawable="@drawable/bg_progress" />
+        </LinearLayout>
+
+        <!-- Insight -->
+        <LinearLayout
+            style="@style/Restudy.Card"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="2dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_sparkle"
+                app:tint="@color/text_tertiary" />
+
+            <TextView
+                android:id="@+id/txtInsight"
+                style="@style/Text.Body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="Your mood improved while stress and burnout moved lower. Two high-pressure days were not completed, so those days will be interpreted carefully." />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="28dp" />
+
+        <TextView
+            android:id="@+id/btnExplore"
+            style="@style/Restudy.Button.Primary"
+            android:text="Explore what changed" />
+
+        <!-- TODO: entries history screen -->
+        <TextView
+            android:id="@+id/btnReviewEntries"
+            style="@style/Restudy.Button.Text"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Review my entries"
+            android:textColor="@color/on_primary_container" />
+    </LinearLayout>
+</ScrollView>
