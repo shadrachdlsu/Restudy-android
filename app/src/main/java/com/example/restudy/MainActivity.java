@@ -1,6 +1,8 @@
 package com.example.restudy;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,12 +16,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+
+        // Add the system bar insets on top of the padding set in the XML (keeps the 28dp side margins)
+        View root = findViewById(R.id.main);
+        int padStart = root.getPaddingStart();
+        int padTop = root.getPaddingTop();
+        int padEnd = root.getPaddingEnd();
+        int padBottom = root.getPaddingBottom();
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPaddingRelative(padStart + systemBars.left, padTop + systemBars.top,
+                    padEnd + systemBars.right, padBottom + systemBars.bottom);
             return insets;
         });
+
+        // Start -> session setup screen
+        findViewById(R.id.btnStart).setOnClickListener(v ->
+                startActivity(new Intent(this, SessionActivity.class)));
     }
-
-
 }
