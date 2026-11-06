@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        // Log in anonymously as soon as the app opens, so we have a user id ready
+        // by the time the user saves their first check-in.
+        FirebaseRepo.ensureSignedIn();
+
         // Add the system bar insets on top of the padding set in the XML (keeps the 28dp side margins)
         View root = findViewById(R.id.main);
         int padStart = root.getPaddingStart();

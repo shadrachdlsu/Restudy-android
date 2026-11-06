@@ -16,7 +16,10 @@ public class SessionActivity extends AppCompatActivity {
 
         // Ready -> check-in before the lockdown
         findViewById(R.id.btnReady).setOnClickListener(v -> {
-            startActivity(new Intent(this, CheckInActivity.class));
+            // New session id: the before + after check-ins of this run are saved under it
+            Intent intent = new Intent(this, CheckInActivity.class);
+            intent.putExtra(CheckInActivity.EXTRA_SESSION_ID, FirebaseRepo.newSessionId());
+            startActivity(intent);
             finish();
         });
 

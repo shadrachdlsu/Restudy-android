@@ -1,1 +1,2 @@
-/build
+/build# Firebase config (project id + API key): shared privately, each dev puts it in app/
+google-services.json

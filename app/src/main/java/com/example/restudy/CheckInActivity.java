@@ -11,13 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * Check-in screen, used before AND after the lockdown.
  * Pass EXTRA_AFTER = true to show the "after" version.
- * Answers are only highlighted on screen (nothing is saved or passed on).
+ * "Start"/"Done" saves the picked answers to Firestore (see FirebaseRepo); "Answer later" skips saving.
  */
 public class CheckInActivity extends AppCompatActivity {
 
     public static final String EXTRA_AFTER = "extra_after";
+    /** Id of the current session, created in SessionActivity and passed screen to screen. */
+    public static final String EXTRA_SESSION_ID = "extra_session_id";
 
     private boolean isAfter;
+    private String sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class CheckInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check_in);
 
         isAfter = getIntent().getBooleanExtra(EXTRA_AFTER, false);
+        sessionId = getIntent().getStringExtra(EXTRA_SESSION_ID);
+        if (sessionId == null) sessionId = FirebaseRepo.newSessionId(); // safety net
         if (isAfter) {
             ((TextView) findViewById(R.id.txtPhase)).setText("After lockdown");
             ((TextView) findViewById(R.id.txtTitle)).setText("How are you after that?");
@@ -37,14 +42,25 @@ public class CheckInActivity extends AppCompatActivity {
         setupScale(R.id.scaleMood);
         setupScale(R.id.scaleEnergy);
 
-        findViewById(R.id.btnStart).setOnClickListener(v -> goNext());
+        // Start/Done -> save the answers, then move on. Firestore saves in the background
+        // (and queues it if offline), so we don't wait for it to finish.
+        findViewById(R.id.btnStart).setOnClickListener(v -> {
+            FirebaseRepo.saveCheckIn(sessionId, isAfter,
+                    selectedValue(R.id.scaleStress),
+                    selectedValue(R.id.scaleMood),
+                    selectedValue(R.id.scaleEnergy));
+            goNext();
+        });
+        // Answer later -> nothing saved
         findViewById(R.id.btnAnswerLater).setOnClickListener(v -> goNext());
     }
 
     // Before -> lockdown, After -> reflection
     private void goNext() {
         Class<?> next = isAfter ? ReflectionActivity.class : LockdownActivity.class;
-        startActivity(new Intent(this, next));
+        Intent intent = new Intent(this, next);
+        intent.putExtra(EXTRA_SESSION_ID, sessionId); // lockdown hands it to the "after" check-in
+        startActivity(intent);
         finish();
     }
 
@@ -62,5 +78,17 @@ public class CheckInActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    /**
+     * Returns the picked value 1-5 for a scale row, or 0 if no dot is selected.
+     * Dots are at child index 0, 2, 4, 6, 8 -> value = index / 2 + 1.
+     */
+    private int selectedValue(int rowId) {
+        LinearLayout row = findViewById(rowId);
+        for (int i = 0; i < row.getChildCount(); i += 2) {
+            if (row.getChildAt(i).isSelected()) return i / 2 + 1;
+        }
+        return 0;
     }
 }

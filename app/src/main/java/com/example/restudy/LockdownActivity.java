@@ -60,6 +60,9 @@ public class LockdownActivity extends AppCompatActivity {
         if (timer != null) timer.cancel();
         Intent intent = new Intent(this, CheckInActivity.class);
         intent.putExtra(CheckInActivity.EXTRA_AFTER, true);
+        // Pass the session id along so the "after" answers go into the same session document
+        intent.putExtra(CheckInActivity.EXTRA_SESSION_ID,
+                getIntent().getStringExtra(CheckInActivity.EXTRA_SESSION_ID));
         startActivity(intent);
         finish();
     }

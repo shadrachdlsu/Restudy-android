@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    // Turns app/google-services.json into resources Firebase reads on startup (project id, API key, ...)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -36,6 +38,11 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
     implementation(libs.material)
+
+    // Firebase: the BoM picks matching versions, so auth/firestore have no version of their own
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)      // anonymous sign-in (gives each install a user id)
+    implementation(libs.firebase.firestore) // cloud database where check-ins are saved
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
